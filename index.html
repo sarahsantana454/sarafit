@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Sara Fit 360° - Modo Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #2f2663;
+            --primary: #714DB5;
+            --light-pink: #EBD9DA;
+            --light-bg: #F2E7EB;
+            --text-primary: #2f2663;
+            --text-secondary: #714DB5;
+            --accent-gradient: linear-gradient(135deg, #2f2663 0%, #714DB5 100%);
+            --shadow: 0 10px 30px rgba(47, 38, 99, 0.2);
+        }
+
+        body {
+            background: linear-gradient(135deg, #2f2663, #714DB5);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Tela de Login */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2f2663, #714DB5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-card {
+            background: #F2E7EB;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid #714DB5;
+        }
+
+        .login-card h2 {
+            color: #2f2663;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .login-card p {
+            color: #714DB5;
+            margin-bottom: 30px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #EBD9DA;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .login-input:focus {
+            border-color: #714DB5;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2f2663, #714DB5);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow);
+        }
+
+        .login-switch {
+            color: #714DB5;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .login-switch:hover {
+            color: #2f2663;
+            text-decoration: underline;
+        }
+
+        .login-error {
+            color: #f44336;
+            margin: 10px 0;
+            font-size: 0.9em;
+            background: #ffebee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .offline-badge {
+            background: #EBD9DA;
+            color: #2f2663;
+            padding: 10px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-top: 15px;
+            border: 1px solid #714DB5;
+        }
+
+        /* Header */
+        .header {
+            background: #F2E7EB;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border: 2px solid #714DB5;
+        }
+
+        .header h1 {
+            color: #2f2663;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #714DB5;
+            font-size: 1.2em;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            border: 1px solid #EBD9DA;
+        }
+
+        .user-email {
+            color: #2f2663;
+            flex: 1;
+        }
+
+        .logout-btn {
+            background: #714DB5;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .user-info {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            border: 1px solid #EBD9DA;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-item span {
+            display: block;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2f2663;
+        }
+
+        .info-item label {
+            color: #714DB5;
+        }
+
+        .streak-card {
+            background: linear-gradient(135deg, #2f2663, #714DB5);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        /* Navegação */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            background: #F2E7EB;
+            color: #2f2663;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #714DB5;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #2f2663, #714DB5);
+            color: white;
+        }
+
+        .content {
+            background: #F2E7EB;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 2px solid #714DB5;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Cards de treino */
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            border: 2px solid #EBD9DA;
+            color: #2f2663;
+        }
+
+        .day-card.completed {
+            border-color: #714DB5;
+            background: #EBD9DA;
+        }
+
+        .day-card h3 {
+            color: #2f2663;
+            margin-bottom: 10px;
+        }
+
+        .focus {
+            color: #714DB5;
+        }
+
+        /* Tabelas de exercícios */
+        .exercise-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .exercise-table th {
+            background: #2f2663;
+            color: white;
+            padding: 12px;
+        }
+
+        .exercise-table td {
+            padding: 12px;
+            border-bottom: 1px solid #EBD9DA;
+        }
+
+        .exercise-checkbox {
+            transform: scale(1.2);
+            accent-color: #714DB5;
+        }
+
+        /* Calendário */
+        .calendar-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .calendar-month {
+            color: #2f2663;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .calendar-nav-btn {
+            background: #714DB5;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            color: #2f2663;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #F2E7EB;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #2f2663;
+        }
+
+        .calendar-day.trained {
+            background: linear-gradient(135deg, #2f2663, #714DB5);
+            color: white;
+        }
+
+        .calendar-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #EBD9DA;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #2f2663;
+        }
+
+        /* Opções de refeição */
+        .meal-section {
+            margin-bottom: 30px;
+        }
+
+        .meal-title {
+            color: #2f2663;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .export-meal-btn {
+            background: #714DB5;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+        }
+
+        .option-card {
+            background: #F2E7EB;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .option-name {
+            color: #2f2663;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .option-desc {
+            color: #714DB5;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .option-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.85em;
+            color: #2f2663;
+            border-top: 1px dashed #EBD9DA;
+            padding-top: 5px;
+        }
+
+        .export-btn {
+            background: #714DB5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Tela de Login (Offline) -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-card">
+            <h2>🏋️‍♀️ Sara Fit 360°</h2>
+            <p>Modo Offline - Login Local</p>
+            
+            <div class="offline-badge">
+                📴 Dados salvos no seu navegador
+            </div>
+            
+            <div id="loginForm">
+                <input type="email" id="loginEmail" class="login-input" placeholder="E-mail" value="teste@email.com">
+                <input type="password" id="loginPassword" class="login-input" placeholder="Senha" value="123456">
+                <div id="loginError" class="login-error"></div>
+                <button class="login-btn" onclick="handleLogin()">Entrar</button>
+                <span class="login-switch" onclick="showSignup()">Não tem conta? Cadastre-se</span>
+            </div>
+            
+            <div id="signupForm" style="display: none;">
+                <input type="email" id="signupEmail" class="login-input" placeholder="E-mail">
+                <input type="password" id="signupPassword" class="login-input" placeholder="Senha (mínimo 6 caracteres)">
+                <div id="signupError" class="login-error"></div>
+                <button class="login-btn" onclick="handleSignup()">Cadastrar</button>
+                <span class="login-switch" onclick="showLogin()">Voltar ao login</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div id="mainContent" class="container" style="display: none;">
+        <div class="header">
+            <h1>🏋️‍♀️ Sara Fit 360°</h1>
+            <p>Modo Offline - Seus dados salvos localmente</p>
+            
+            <div class="user-header">
+                <span class="user-email" id="userEmail">carregando...</span>
+                <button class="logout-btn" onclick="handleLogout()">Sair</button>
+            </div>
+            
+            <div class="user-info">
+                <div class="info-item"><span>1,58m</span><label>Altura</label></div>
+                <div class="info-item"><span id="peso-atual">89kg</span><label>Peso</label></div>
+                <div class="info-item"><span>5x</span><label>Frequência</label></div>
+                <div class="info-item"><span>🎯</span><label>Glúteos</label></div>
+            </div>
+
+            <div class="streak-card" id="streakCard">
+                <span>🔥</span>
+                <span class="streak-number" id="streakCount">0</span>
+                <span>dias</span>
+            </div>
+        </div>
+
+        <!-- Navegação -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('treinos')">📋 Treinos</button>
+            <button class="tab-btn" onclick="showTab('alimentacao')">🥗 Alimentação</button>
+            <button class="tab-btn" onclick="showTab('calendario')">📅 Calendário</button>
+        </div>
+
+        <div class="content">
+            <!-- Treinos -->
+            <div id="treinos" class="tab-panel active">
+                <h2 style="color: #2f2663;">📅 Seus Treinos</h2>
+                <div class="week-grid">
+                    <div class="day-card" onclick="showWorkout('segunda')" id="card-segunda">
+                        <h3>Segunda</h3>
+                        <div class="focus">🔥 Glúteos + Quadríceps</div>
+                    </div>
+                    <div class="day-card" onclick="showWorkout('terca')" id="card-terca">
+                        <h3>Terça</h3>
+                        <div class="focus">💪 Costas + Bíceps</div>
+                    </div>
+                    <div class="day-card" onclick="showWorkout('quarta')" id="card-quarta">
+                        <h3>Quarta</h3>
+                        <div class="focus">🍑 Glúteos + Posteriores</div>
+                    </div>
+                    <div class="day-card" onclick="showWorkout('quinta')" id="card-quinta">
+                        <h3>Quinta</h3>
+                        <div class="focus">💪 Peito + Tríceps</div>
+                    </div>
+                    <div class="day-card" onclick="showWorkout('sexta')" id="card-sexta">
+                        <h3>Sexta</h3>
+                        <div class="focus">🔥 Glúteos + HIIT</div>
+                    </div>
+                </div>
+
+                <div id="treino-segunda" class="workout-detail">
+                    <h3>Segunda - Glúteos e Quadríceps</h3>
+                    <table class="exercise-table">
+                        <tr><th></th><th>Exercício</th><th>Séries</th><th>Repetições</th></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',0)"></td><td>Agachamento Livre</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',1)"></td><td>Leg Press</td><td>4</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',2)"></td><td>Cadeira Extensora</td><td>3</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',3)"></td><td>Afundo</td><td>3</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',4)"></td><td>Elevação Pélvica</td><td>4</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',5)"></td><td>Panturrilha</td><td>4</td><td>20</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Alimentação -->
+            <div id="alimentacao" class="tab-panel">
+                <h2 style="color: #2f2663;">🥗 20 Opções por Refeição</h2>
+                
+                <div class="meal-section">
+                    <div class="meal-title">
+                        🌅 Café da Manhã
+                        <button class="export-meal-btn" onclick="exportarRefeicao('cafe')">📥 Exportar</button>
+                    </div>
+                    <div class="options-grid" id="cafeOptions"></div>
+                </div>
+                
+                <div class="meal-section">
+                    <div class="meal-title">
+                        ☀️ Lanche da Manhã
+                        <button class="export-meal-btn" onclick="exportarRefeicao('lanche')">📥 Exportar</button>
+                    </div>
+                    <div class="options-grid" id="lancheOptions"></div>
+                </div>
+            </div>
+
+            <!-- Calendário -->
+            <div id="calendario" class="tab-panel">
+                <h2 style="color: #2f2663;">📅 Calendário de Treinos</h2>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="calendar-month" id="currentMonth">Março 2026</div>
+                        <div>
+                            <button class="calendar-nav-btn" onclick="previousMonth()">←</button>
+                            <button class="calendar-nav-btn" onclick="nextMonth()">→</button>
+                        </div>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays"></div>
+                    <div class="calendar-stats">
+                        <div><span class="stat-value" id="totalTreinos">0</span><div>Treinos</div></div>
+                        <div><span class="stat-value" id="streakAtual">0</span><div>Streak</div></div>
+                    </div>
+                    <button class="export-btn" onclick="marcarHoje()">✅ Marcar hoje</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💜 Modo Offline - Sara Fit 360°</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // BANCO DE DADOS OFFLINE (localStorage)
+        // ============================================
+        const db = {
+            users: JSON.parse(localStorage.getItem('offlineUsers') || '{}'),
+            currentUser: localStorage.getItem('currentUser'),
+            
+            saveUser(email, password) {
+                const userId = 'user_' + Date.now();
+                this.users[userId] = {
+                    email: email,
+                    password: password,
+                    trainedDays: {},
+                    streak: 0,
+                    lastWorkout: null,
+                    createdAt: new Date().toISOString()
+                };
+                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
+                return userId;
+            },
+            
+            findUser(email, password) {
+                for (let id in this.users) {
+                    if (this.users[id].email === email && this.users[id].password === password) {
+                        return this.users[id];
+                    }
+                }
+                return null;
+            },
+            
+            setCurrentUser(userId) {
+                this.currentUser = userId;
+                localStorage.setItem('currentUser', userId);
+            },
+            
+            getCurrentUser() {
+                return this.currentUser ? this.users[this.currentUser] : null;
+            },
+            
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+            },
+            
+            addTrainedDay(date) {
+                if (!this.currentUser) return;
+                if (!this.users[this.currentUser].trainedDays) {
+                    this.users[this.currentUser].trainedDays = {};
+                }
+                this.users[this.currentUser].trainedDays[date] = true;
+                this.updateStreak(date);
+                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
+            },
+            
+            removeTrainedDay(date) {
+                if (!this.currentUser) return;
+                delete this.users[this.currentUser].trainedDays[date];
+                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
+            },
+            
+            getTrainedDays() {
+                if (!this.currentUser) return [];
+                const days = this.users[this.currentUser].trainedDays || {};
+                return Object.keys(days).filter(key => days[key] === true);
+            },
+            
+            updateStreak(today) {
+                if (!this.currentUser) return;
+                const user = this.users[this.currentUser];
+                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                
+                if (user.trainedDays[yesterday]) {
+                    user.streak = (user.streak || 0) + 1;
+                } else {
+                    user.streak = 1;
+                }
+                
+                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
+                return user.streak;
+            },
+            
+            getStreak() {
+                return this.currentUser ? (this.users[this.currentUser].streak || 0) : 0;
+            }
+        };
+
+        // ============================================
+        // DADOS DAS REFEIÇÕES
+        // ============================================
+        const opcoesCafe = [
+            { nome: "Ovos Mexidos", desc: "2 ovos + pão integral + queijo", calorias: 350, proteinas: 25 },
+            { nome: "Vitamina", desc: "Whey + banana + leite + aveia", calorias: 320, proteinas: 30 },
+            { nome: "Iogurte com Granola", desc: "Iogurte grego + granola + frutas", calorias: 280, proteinas: 18 },
+            { nome: "Panqueca de Banana", desc: "2 panquecas de banana com aveia", calorias: 290, proteinas: 12 },
+            { nome: "Tapioca com Queijo", desc: "Tapioca + queijo mussarela", calorias: 310, proteinas: 14 },
+            { nome: "Café da Manhã Fit", desc: "Pão integral + pasta de amendoim + banana", calorias: 330, proteinas: 15 },
+            { nome: "Omelete", desc: "3 ovos + tomate + cebola", calorias: 290, proteinas: 22 },
+            { nome: "Crepioca", desc: "2 ovos + goma de tapioca", calorias: 340, proteinas: 20 },
+            { nome: "Smoothie", desc: "Morango + banana + iogurte", calorias: 260, proteinas: 12 },
+            { nome: "Pão com Ovo", desc: "Pão francês + 2 ovos", calorias: 370, proteinas: 18 },
+            { nome: "Cuscuz", desc: "Cuscuz + ovo + manteiga", calorias: 300, proteinas: 14 },
+            { nome: "Mingau de Aveia", desc: "Aveia + leite + canela", calorias: 280, proteinas: 12 },
+            { nome: "Wrap", desc: "Tortilha integral + ricota + peito de peru", calorias: 310, proteinas: 20 },
+            { nome: "Frutas com Iogurte", desc: "Banana + maçã + iogurte", calorias: 250, proteinas: 10 },
+            { nome: "Sanduíche Natural", desc: "Pão integral + atum + milho", calorias: 290, proteinas: 22 },
+            { nome: "Quinoa com Frutas", desc: "Quinoa em flocos + leite + morangos", calorias: 270, proteinas: 11 },
+            { nome: "Pão de Queijo Fit", desc: "6 pães de queijo de tapioca", calorias: 310, proteinas: 8 },
+            { nome: "Shake Verde", desc: "Couve + maçã + gengibre + whey", calorias: 230, proteinas: 25 },
+            { nome: "Bowl de Açaí", desc: "Açaí + banana + granola", calorias: 340, proteinas: 15 },
+            { nome: "Mamão com Aveia", desc: "Mamão + aveia + mel", calorias: 240, proteinas: 8 }
+        ];
+
+        const opcoesLanche = [
+            { nome: "Mix de Castanhas", desc: "Castanhas, amêndoas e nozes", calorias: 180, proteinas: 5 },
+            { nome: "Frutas Secas", desc: "Damasco, ameixa e castanha", calorias: 160, proteinas: 3 },
+            { nome: "Iogurte Proteico", desc: "Iogurte grego + chia", calorias: 140, proteinas: 12 },
+            { nome: "Banana com Pasta", desc: "Banana + pasta de amendoim", calorias: 190, proteinas: 6 },
+            { nome: "Maçã com Canela", desc: "Maçã assada com canela", calorias: 120, proteinas: 1 },
+            { nome: "Barra de Cereal", desc: "2 barras de cereal integral", calorias: 150, proteinas: 4 },
+            { nome: "Ovo Cozido", desc: "2 ovos cozidos", calorias: 140, proteinas: 12 },
+            { nome: "Suco Verde", desc: "Couve + limão + gengibre", calorias: 100, proteinas: 2 },
+            { nome: "Tapioca Doce", desc: "Tapioca + coco + mel", calorias: 160, proteinas: 2 },
+            { nome: "Queijo Branco", desc: "2 fatias queijo minas", calorias: 140, proteinas: 10 },
+            { nome: "Whey Shake", desc: "Whey + água gelada", calorias: 120, proteinas: 24 },
+            { nome: "Biscoito de Arroz", desc: "4 biscoitos + requeijão", calorias: 130, proteinas: 3 },
+            { nome: "Cenoura Baby", desc: "Palitos de cenoura + homus", calorias: 110, proteinas: 3 },
+            { nome: "Leite com Chocolate", desc: "Leite + chocolate 70%", calorias: 150, proteinas: 8 },
+            { nome: "Café com Leite", desc: "Café + leite + torrada", calorias: 120, proteinas: 6 },
+            { nome: "Pasta de Grão", desc: "Torrada + pasta de grão de bico", calorias: 140, proteinas: 5 },
+            { nome: "Suco Detox", desc: "Couve + limão + pepino", calorias: 70, proteinas: 1 },
+            { nome: "Palitos de Pepino", desc: "Pepino + cream cheese light", calorias: 90, proteinas: 3 },
+            { nome: "Chá com Torrada", desc: "Chá verde + torrada integral", calorias: 100, proteinas: 2 },
+            { nome: "Gelatina", desc: "Gelatina diet + chia", calorias: 60, proteinas: 2 }
+        ];
+
+        // ============================================
+        // FUNÇÕES DE LOGIN OFFLINE
+        // ============================================
+        
+        function handleSignup() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const errorDiv = document.getElementById('signupError');
+
+            if (!email || !password) {
+                errorDiv.innerHTML = '❌ Preencha todos os campos';
+                return;
+            }
+
+            if (password.length < 6) {
+                errorDiv.innerHTML = '❌ Senha deve ter 6+ caracteres';
+                return;
+            }
+
+            const userId = db.saveUser(email, password);
+            db.setCurrentUser(userId);
+            
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('userEmail').innerHTML = email;
+            atualizarInterface();
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+
+            const user = db.findUser(email, password);
+            
+            if (user) {
+                // Encontrar o ID do usuário
+                for (let id in db.users) {
+                    if (db.users[id].email === email) {
+                        db.setCurrentUser(id);
+                        break;
+                    }
+                }
+                
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('userEmail').innerHTML = email;
+                atualizarInterface();
+            } else {
+                errorDiv.innerHTML = '❌ E-mail ou senha inválidos';
+            }
+        }
+
+        function handleLogout() {
+            db.logout();
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('signupError').innerHTML = '';
+        }
+
+        function showLogin() {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginError').innerHTML = '';
+        }
+
+        // ============================================
+        // FUNÇÕES DE INTERFACE
+        // ============================================
+        
+        function atualizarInterface() {
+            document.getElementById('streakCount').innerHTML = db.getStreak();
+            carregarOpcoes();
+            renderCalendar();
+        }
+
+        function carregarOpcoes() {
+            let cafeHtml = '';
+            opcoesCafe.forEach(op => {
+                cafeHtml += `
+                    <div class="option-card">
+                        <div class="option-name">${op.nome}</div>
+                        <div class="option-desc">${op.desc}</div>
+                        <div class="option-meta">
+                            <span>🔥 ${op.calorias} kcal</span>
+                            <span>💪 ${op.proteinas}g</span>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('cafeOptions').innerHTML = cafeHtml;
+            
+            let lancheHtml = '';
+            opcoesLanche.forEach(op => {
+                lancheHtml += `
+                    <div class="option-card">
+                        <div class="option-name">${op.nome}</div>
+                        <div class="option-desc">${op.desc}</div>
+                        <div class="option-meta">
+                            <span>🔥 ${op.calorias} kcal</span>
+                            <span>💪 ${op.proteinas}g</span>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('lancheOptions').innerHTML = lancheHtml;
+        }
+
+        function exportarRefeicao(tipo) {
+            const opcoes = tipo === 'cafe' ? opcoesCafe : opcoesLanche;
+            const nome = tipo === 'cafe' ? 'Café da Manhã' : 'Lanche da Manhã';
+            
+            let conteudo = `# 🥗 Sara Fit - ${nome}\n\n`;
+            opcoes.forEach((op, i) => {
+                conteudo += `${i+1}. **${op.nome}**\n`;
+                conteudo += `   ${op.desc}\n`;
+                conteudo += `   🔥 ${op.calorias} kcal | 💪 ${op.proteinas}g proteína\n\n`;
+            });
+            
+            const blob = new Blob([conteudo], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sara-fit-${tipo}.txt`;
+            a.click();
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function showWorkout(day) {
+            document.querySelectorAll('.workout-detail').forEach(w => w.style.display = 'none');
+            document.getElementById('treino-' + day).style.display = 'block';
+        }
+
+        function updateProgress(day, index) {
+            const card = document.getElementById(`card-${day}`);
+            const checkboxes = document.querySelectorAll(`#treino-${day} .exercise-checkbox`);
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            
+            if (allChecked) {
+                card.classList.add('completed');
+            } else {
+                card.classList.remove('completed');
+            }
+        }
+
+        // ============================================
+        // CALENDÁRIO
+        // ============================================
+        let currentDate = new Date();
+        
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            document.getElementById('currentMonth').innerHTML = `${months[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+            
+            let html = '';
+            for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day empty"></div>';
+            
+            const trained = db.getTrainedDays();
+            let treinosCount = 0;
+            
+            for (let d = 1; d <= lastDate; d++) {
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const isTrained = trained.includes(dateStr);
+                if (isTrained) treinosCount++;
+                html += `<div class="calendar-day ${isTrained ? 'trained' : ''}" onclick="toggleDay('${dateStr}')">${d}</div>`;
+            }
+            
+            document.getElementById('calendarDays').innerHTML = html;
+            document.getElementById('totalTreinos').innerHTML = treinosCount;
+            document.getElementById('streakAtual').innerHTML = db.getStreak();
+        }
+
+        function toggleDay(dateStr) {
+            const trained = db.getTrainedDays();
+            if (trained.includes(dateStr)) {
+                db.removeTrainedDay(dateStr);
+            } else {
+                db.addTrainedDay(dateStr);
+            }
+            renderCalendar();
+        }
+
+        function marcarHoje() {
+            const today = new Date().toISOString().split('T')[0];
+            db.addTrainedDay(today);
+            renderCalendar();
+            alert('✅ Treino de hoje registrado!');
+        }
+
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        window.onload = function() {
+            // Verificar se já tem usuário logado
+            const currentUser = db.getCurrentUser();
+            if (currentUser) {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('userEmail').innerHTML = currentUser.email;
+                atualizarInterface();
+            }
+        };
+    </script>
+</body>
+</html>
