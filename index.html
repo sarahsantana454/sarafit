@@ -12,7 +12,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Variáveis de cor */
+        /* Variáveis de cor - SUA PALETA */
         :root {
             --roxo-escuro: #2f2663;
             --roxo-medio: #714DB5;
@@ -46,7 +46,7 @@
             margin: 0 auto;
         }
 
-        /* --- TELA DE LOGIN --- */
+        /* --- TELA DE LOGIN COM BACKGROUND BONITO --- */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -166,7 +166,7 @@
             border: 1px solid #d32f2f;
         }
 
-        /* --- CABEÇALHO PRINCIPAL --- */
+        /* --- CABEÇALHO PRINCIPAL COM BACKGROUND BONITO --- */
         .header {
             background: var(--off-white);
             border-radius: 30px;
@@ -410,7 +410,7 @@
             accent-color: var(--roxo-medio);
         }
 
-        /* --- SEÇÃO DA ESTEIRA --- */
+        /* --- SEÇÃO DA ESTEIRA (AQUI ESTÁ ELA!) --- */
         .esteira-section {
             background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
             border-radius: 25px;
@@ -832,12 +832,51 @@
                     </table>
                 </div>
 
-                <!-- SEÇÃO DA ESTEIRA (Adicionada aqui!) -->
+                <!-- Detalhe do Treino - Quarta (oculto) -->
+                <div id="treino-quarta" class="workout-detail" style="display: none;">
+                    <h3 style="color: var(--roxo-escuro);">🍑 Quarta: Glúteos e Posteriores</h3>
+                    <table class="exercise-table">
+                        <tr><th></th><th>Exercício</th><th>Séries</th><th>Repetições</th></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quarta',0)"></td><td>Cadeira Flexora</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quarta',1)"></td><td>Mesa Flexora</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quarta',2)"></td><td>Stiff</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quarta',3)"></td><td>Cadeira Abdutora</td><td>4</td><td>20</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quarta',4)"></td><td>Coice na Polia</td><td>4</td><td>15</td></tr>
+                    </table>
+                </div>
+
+                <!-- Detalhe do Treino - Quinta (oculto) -->
+                <div id="treino-quinta" class="workout-detail" style="display: none;">
+                    <h3 style="color: var(--roxo-escuro);">💪 Quinta: Peito e Tríceps</h3>
+                    <table class="exercise-table">
+                        <tr><th></th><th>Exercício</th><th>Séries</th><th>Repetições</th></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quinta',0)"></td><td>Supino Reto</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quinta',1)"></td><td>Supino Inclinado</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quinta',2)"></td><td>Crucifixo Reto</td><td>3</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quinta',3)"></td><td>Tríceps Corda</td><td>4</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('quinta',4)"></td><td>Tríceps Francês</td><td>3</td><td>12</td></tr>
+                    </table>
+                </div>
+
+                <!-- Detalhe do Treino - Sexta (oculto) -->
+                <div id="treino-sexta" class="workout-detail" style="display: none;">
+                    <h3 style="color: var(--roxo-escuro);">🔥 Sexta: Glúteos + Abdômen + HIIT</h3>
+                    <table class="exercise-table">
+                        <tr><th></th><th>Exercício</th><th>Séries</th><th>Repetições</th></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('sexta',0)"></td><td>Agachamento Sumô</td><td>4</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('sexta',1)"></td><td>Abdução na Polia</td><td>4</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('sexta',2)"></td><td>Elevação Pélvica</td><td>3</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('sexta',3)"></td><td>Abdominal Infra</td><td>4</td><td>20</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('sexta',4)"></td><td>Prancha</td><td>3</td><td>30s</td></tr>
+                    </table>
+                </div>
+
+                <!-- SEÇÃO DA ESTEIRA (AQUI ESTÁ ELA!) -->
                 <div class="esteira-section">
                     <h3 style="color: white; margin-bottom: 15px;">🏃‍♀️ Treino de Esteira</h3>
                     <div class="esteira-grid">
                         <div class="esteira-input-group">
-                            <label>Tempo (min)</label>
+                            <label>Tempo (minutos)</label>
                             <input type="number" id="esteiraTempo" class="esteira-input" value="30" min="1" max="120">
                         </div>
                         <div class="esteira-input-group">
@@ -935,7 +974,7 @@
                 const userId = 'user_' + Date.now();
                 this.users[userId] = {
                     email: email,
-                    password: password, // Apenas para demonstração offline
+                    password: password,
                     trainedDays: {},
                     streak: 0,
                     lastWorkout: null,
@@ -1116,11 +1155,13 @@
         function showSignup() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('signupError').innerHTML = '';
         }
 
         function showLogin() {
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginError').innerHTML = '';
         }
 
         // ============================================
@@ -1163,7 +1204,7 @@
         }
 
         // ============================================
-        // FUNÇÕES DA ESTEIRA
+        // FUNÇÕES DA ESTEIRA (FUNCIONANDO!)
         // ============================================
         let esteiraInterval;
         let esteiraAtiva = false;
@@ -1271,7 +1312,6 @@
         function toggleDay(dateStr) {
             const trained = db.getTrainedDays();
             if (trained.includes(dateStr)) {
-                // Não implementamos remoção para manter simplicidade
                 alert('Para remover um dia, use o botão "Marcar Hoje"');
             } else {
                 db.addTrainedDay(dateStr);
