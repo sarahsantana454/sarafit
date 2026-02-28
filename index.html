@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Sara Fit 360° - Modo Offline</title>
+    <title>Sara Fit 360° - Sua Jornada Fitness</title>
     <style>
         * {
             margin: 0;
@@ -12,21 +12,33 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Variáveis de cor */
         :root {
-            --primary-dark: #2f2663;
-            --primary: #714DB5;
-            --light-pink: #EBD9DA;
-            --light-bg: #F2E7EB;
-            --text-primary: #2f2663;
-            --text-secondary: #714DB5;
-            --accent-gradient: linear-gradient(135deg, #2f2663 0%, #714DB5 100%);
-            --shadow: 0 10px 30px rgba(47, 38, 99, 0.2);
+            --roxo-escuro: #2f2663;
+            --roxo-medio: #714DB5;
+            --rosa-claro: #EBD9DA;
+            --off-white: #F2E7EB;
+            --shadow: 0 8px 20px rgba(47, 38, 99, 0.3);
         }
 
         body {
-            background: linear-gradient(135deg, #2f2663, #714DB5);
+            background: url('https://i.postimg.cc/RZsHLrWL/Design-sem-nome-2.png') no-repeat center center fixed;
+            background-size: cover;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
+            position: relative;
+        }
+
+        /* Overlay suave para garantir legibilidade */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(242, 231, 235, 0.85); /* #F2E7EB com transparência */
+            z-index: -1;
         }
 
         .container {
@@ -34,69 +46,96 @@
             margin: 0 auto;
         }
 
-        /* Tela de Login */
+        /* --- TELA DE LOGIN --- */
         .login-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #2f2663, #714DB5);
+            background: url('https://i.postimg.cc/RZsHLrWL/Design-sem-nome-2.png') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
         }
 
+        .login-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(47, 38, 99, 0.9), rgba(113, 77, 181, 0.9));
+        }
+
         .login-card {
-            background: #F2E7EB;
-            padding: 40px;
-            border-radius: 20px;
+            background: var(--off-white);
+            padding: 35px 25px;
+            border-radius: 30px;
             width: 90%;
             max-width: 400px;
             box-shadow: var(--shadow);
             text-align: center;
-            border: 2px solid #714DB5;
+            position: relative;
+            border: 3px solid var(--roxo-medio);
         }
 
         .login-card h2 {
-            color: #2f2663;
-            margin-bottom: 10px;
-            font-size: 2em;
+            color: var(--roxo-escuro);
+            margin-bottom: 5px;
+            font-size: 2.2em;
         }
 
         .login-card p {
-            color: #714DB5;
-            margin-bottom: 30px;
+            color: var(--roxo-medio);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .offline-badge {
+            background: var(--roxo-medio);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin: 10px 0 20px;
+            display: inline-block;
+            border: 1px solid var(--roxo-escuro);
         }
 
         .login-input {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
-            border: 2px solid #EBD9DA;
-            border-radius: 10px;
+            border: 2px solid var(--rosa-claro);
+            border-radius: 50px;
             font-size: 1em;
             transition: all 0.3s;
+            background: white;
         }
 
         .login-input:focus {
-            border-color: #714DB5;
+            border-color: var(--roxo-medio);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(113, 77, 181, 0.2);
         }
 
         .login-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #2f2663, #714DB5);
+            background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             font-size: 1.1em;
             font-weight: bold;
             cursor: pointer;
-            margin: 10px 0;
+            margin: 15px 0 10px;
             transition: all 0.3s;
+            border: 1px solid var(--roxo-escuro);
         }
 
         .login-btn:hover {
@@ -105,55 +144,50 @@
         }
 
         .login-switch {
-            color: #714DB5;
+            color: var(--roxo-medio);
             cursor: pointer;
             margin-top: 15px;
             display: inline-block;
+            font-weight: 500;
         }
 
         .login-switch:hover {
-            color: #2f2663;
+            color: var(--roxo-escuro);
             text-decoration: underline;
         }
 
         .login-error {
-            color: #f44336;
+            color: #d32f2f;
             margin: 10px 0;
             font-size: 0.9em;
-            background: #ffebee;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .offline-badge {
-            background: #EBD9DA;
-            color: #2f2663;
+            background: #ffcdd2;
             padding: 10px;
             border-radius: 50px;
-            font-size: 0.9em;
-            margin-top: 15px;
-            border: 1px solid #714DB5;
+            border: 1px solid #d32f2f;
         }
 
-        /* Header */
+        /* --- CABEÇALHO PRINCIPAL --- */
         .header {
-            background: #F2E7EB;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+            background: var(--off-white);
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 20px;
             box-shadow: var(--shadow);
-            border: 2px solid #714DB5;
+            border: 3px solid var(--roxo-medio);
+            position: relative;
+            backdrop-filter: blur(5px);
         }
 
         .header h1 {
-            color: #2f2663;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            color: var(--roxo-escuro);
+            font-size: 2.2em;
+            margin-bottom: 5px;
         }
 
         .header p {
-            color: #714DB5;
-            font-size: 1.2em;
+            color: var(--roxo-medio);
+            font-size: 1.1em;
+            font-weight: 500;
         }
 
         .user-header {
@@ -163,53 +197,62 @@
             background: white;
             padding: 10px 20px;
             border-radius: 50px;
-            margin-top: 15px;
-            border: 1px solid #EBD9DA;
+            margin: 15px 0;
+            border: 2px solid var(--roxo-medio);
         }
 
         .user-email {
-            color: #2f2663;
+            color: var(--roxo-escuro);
             flex: 1;
+            font-weight: 500;
         }
 
         .logout-btn {
-            background: #714DB5;
+            background: var(--roxo-medio);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 50px;
             cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 1px solid var(--roxo-escuro);
+        }
+
+        .logout-btn:hover {
+            background: var(--roxo-escuro);
         }
 
         .user-info {
             background: white;
             padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
+            border-radius: 25px;
             display: flex;
-            justify-content: center;
-            gap: 30px;
+            justify-content: space-around;
             flex-wrap: wrap;
-            border: 1px solid #EBD9DA;
+            gap: 15px;
+            border: 2px solid var(--roxo-medio);
         }
 
         .info-item {
             text-align: center;
+            min-width: 100px;
         }
 
         .info-item span {
             display: block;
-            font-size: 1.5em;
+            font-size: 1.6em;
             font-weight: bold;
-            color: #2f2663;
+            color: var(--roxo-escuro);
         }
 
         .info-item label {
-            color: #714DB5;
+            color: var(--roxo-medio);
+            font-weight: 500;
         }
 
         .streak-card {
-            background: linear-gradient(135deg, #2f2663, #714DB5);
+            background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
             color: white;
             padding: 15px 25px;
             border-radius: 50px;
@@ -217,39 +260,53 @@
             align-items: center;
             gap: 15px;
             margin-top: 15px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--off-white);
+            font-weight: bold;
         }
 
-        /* Navegação */
+        /* --- NAVEGAÇÃO --- */
         .nav-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .tab-btn {
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
             border-radius: 50px;
-            background: #F2E7EB;
-            color: #2f2663;
+            background: var(--off-white);
+            color: var(--roxo-escuro);
             font-weight: bold;
             cursor: pointer;
-            border: 2px solid #714DB5;
+            border: 2px solid var(--roxo-medio);
+            transition: all 0.3s;
+            font-size: 0.95em;
+            backdrop-filter: blur(5px);
         }
 
-        .tab-btn.active {
-            background: linear-gradient(135deg, #2f2663, #714DB5);
+        .tab-btn:hover {
+            background: var(--roxo-medio);
             color: white;
         }
 
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
+            color: white;
+            border-color: var(--off-white);
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
         .content {
-            background: #F2E7EB;
-            border-radius: 20px;
-            padding: 30px;
+            background: var(--off-white);
+            border-radius: 30px;
+            padding: 25px;
             box-shadow: var(--shadow);
-            border: 2px solid #714DB5;
+            border: 3px solid var(--roxo-medio);
+            backdrop-filter: blur(5px);
         }
 
         .tab-panel {
@@ -260,100 +317,222 @@
             display: block;
         }
 
-        /* Cards de treino */
+        h2 {
+            color: var(--roxo-escuro);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 8px solid var(--roxo-medio);
+            padding-left: 15px;
+        }
+
+        /* --- CARDS DE TREINO --- */
         .week-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .day-card {
             background: white;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
             cursor: pointer;
-            border: 2px solid #EBD9DA;
-            color: #2f2663;
+            transition: all 0.3s;
+            border: 2px solid var(--rosa-claro);
+            color: var(--roxo-escuro);
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--roxo-medio);
+            box-shadow: var(--shadow);
         }
 
         .day-card.completed {
-            border-color: #714DB5;
-            background: #EBD9DA;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-color: #4CAF50;
+            position: relative;
+        }
+
+        .day-card.completed::after {
+            content: "✓";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            color: #4CAF50;
+            font-size: 1.5em;
+            font-weight: bold;
         }
 
         .day-card h3 {
-            color: #2f2663;
-            margin-bottom: 10px;
+            color: var(--roxo-escuro);
+            margin-bottom: 5px;
         }
 
         .focus {
-            color: #714DB5;
+            color: var(--roxo-medio);
+            font-weight: 500;
+            font-size: 0.9em;
         }
 
-        /* Tabelas de exercícios */
+        /* --- TABELAS DE EXERCÍCIO --- */
         .exercise-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
             background: white;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid var(--roxo-medio);
         }
 
         .exercise-table th {
-            background: #2f2663;
+            background: var(--roxo-escuro);
             color: white;
             padding: 12px;
+            font-weight: 600;
         }
 
         .exercise-table td {
-            padding: 12px;
-            border-bottom: 1px solid #EBD9DA;
+            padding: 10px;
+            border-bottom: 1px solid var(--rosa-claro);
+        }
+
+        .exercise-table tr:last-child td {
+            border-bottom: none;
         }
 
         .exercise-checkbox {
             transform: scale(1.2);
-            accent-color: #714DB5;
+            cursor: pointer;
+            accent-color: var(--roxo-medio);
         }
 
-        /* Calendário */
+        /* --- SEÇÃO DA ESTEIRA --- */
+        .esteira-section {
+            background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
+            border-radius: 25px;
+            padding: 25px;
+            margin-top: 30px;
+            color: white;
+            border: 2px solid var(--off-white);
+        }
+
+        .esteira-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .esteira-input-group {
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .esteira-input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--off-white);
+        }
+
+        .esteira-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--off-white);
+            border-radius: 50px;
+            font-size: 1em;
+            background: white;
+            color: var(--roxo-escuro);
+            font-weight: bold;
+        }
+
+        .esteira-botoes {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0 10px;
+        }
+
+        .esteira-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .esteira-btn.iniciar {
+            background: #4CAF50;
+            color: white;
+        }
+        .esteira-btn.pausar { background: #ff9800; color: white; }
+        .esteira-btn.finalizar { background: #f44336; color: white; }
+        .esteira-btn:hover { transform: scale(1.02); filter: brightness(0.9); }
+
+        .esteira-status {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-size: 1.1em;
+            text-align: center;
+            border: 1px solid var(--off-white);
+        }
+
+        /* --- CALENDÁRIO --- */
         .calendar-container {
             background: white;
-            border-radius: 15px;
+            border-radius: 25px;
             padding: 20px;
-            margin: 20px 0;
+            border: 2px solid var(--roxo-medio);
         }
 
         .calendar-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
         .calendar-month {
-            color: #2f2663;
-            font-size: 1.5em;
+            color: var(--roxo-escuro);
+            font-size: 1.4em;
             font-weight: bold;
         }
 
         .calendar-nav-btn {
-            background: #714DB5;
+            background: var(--roxo-medio);
             color: white;
             border: none;
             width: 35px;
             height: 35px;
             border-radius: 50%;
             cursor: pointer;
-            margin: 0 5px;
+            font-size: 1.2em;
+            margin: 0 3px;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: var(--roxo-escuro);
         }
 
         .calendar-weekdays {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             text-align: center;
-            color: #2f2663;
             font-weight: bold;
+            color: var(--roxo-escuro);
             margin-bottom: 10px;
         }
 
@@ -368,127 +547,190 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #F2E7EB;
+            background: var(--off-white);
             border-radius: 10px;
             cursor: pointer;
-            color: #2f2663;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .calendar-day:hover {
+            background: var(--rosa-claro);
+            transform: scale(1.05);
         }
 
         .calendar-day.trained {
-            background: linear-gradient(135deg, #2f2663, #714DB5);
+            background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
             color: white;
+            font-weight: bold;
+        }
+
+        .calendar-day.today {
+            border: 3px solid var(--roxo-escuro);
+            font-weight: bold;
         }
 
         .calendar-stats {
             display: flex;
             justify-content: space-around;
             margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid #EBD9DA;
+            padding-top: 15px;
+            border-top: 2px solid var(--rosa-claro);
         }
 
         .stat-value {
             font-size: 1.8em;
             font-weight: bold;
-            color: #2f2663;
+            color: var(--roxo-escuro);
         }
 
-        /* Opções de refeição */
+        .stat-label {
+            color: var(--roxo-medio);
+        }
+
+        /* --- SEÇÃO DE ALIMENTAÇÃO --- */
         .meal-section {
             margin-bottom: 30px;
         }
 
         .meal-title {
-            color: #2f2663;
-            font-size: 1.5em;
+            color: var(--roxo-escuro);
+            font-size: 1.4em;
             font-weight: bold;
             margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            background: var(--rosa-claro);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--roxo-medio);
         }
 
         .export-meal-btn {
-            background: #714DB5;
+            background: var(--roxo-medio);
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 0.8em;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 1px solid var(--roxo-escuro);
+        }
+
+        .export-meal-btn:hover {
+            background: var(--roxo-escuro);
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 15px;
-            max-height: 400px;
+            max-height: 450px;
             overflow-y: auto;
-            padding: 15px;
+            padding: 10px;
             background: white;
-            border-radius: 15px;
+            border-radius: 25px;
+            border: 2px solid var(--roxo-medio);
         }
 
         .option-card {
-            background: #F2E7EB;
+            background: var(--off-white);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 18px;
+            transition: all 0.3s;
+            border: 1px solid var(--rosa-claro);
+        }
+
+        .option-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--roxo-medio);
+            box-shadow: var(--shadow);
         }
 
         .option-name {
-            color: #2f2663;
             font-weight: bold;
+            color: var(--roxo-escuro);
             margin-bottom: 5px;
+            font-size: 1.1em;
         }
 
         .option-desc {
-            color: #714DB5;
+            color: var(--roxo-medio);
             font-size: 0.9em;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .option-meta {
             display: flex;
             gap: 15px;
-            font-size: 0.85em;
-            color: #2f2663;
-            border-top: 1px dashed #EBD9DA;
-            padding-top: 5px;
+            font-size: 0.9em;
+            color: var(--roxo-escuro);
+            border-top: 1px dashed var(--rosa-claro);
+            padding-top: 8px;
+            margin-top: 5px;
         }
 
+        /* --- BOTÕES EXTRAS --- */
         .export-btn {
-            background: #714DB5;
+            background: var(--roxo-medio);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            padding: 12px 30px;
+            border-radius: 50px;
             cursor: pointer;
-            margin: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: all 0.3s;
+            border: 1px solid var(--roxo-escuro);
         }
 
+        .export-btn:hover {
+            background: var(--roxo-escuro);
+            transform: scale(1.02);
+        }
+
+        /* --- RODAPÉ --- */
         .footer {
             text-align: center;
-            margin-top: 30px;
-            color: white;
+            margin-top: 25px;
+            color: var(--roxo-escuro);
+            font-weight: bold;
+            background: rgba(242, 231, 235, 0.7);
+            padding: 15px;
+            border-radius: 50px;
+            border: 1px solid var(--roxo-medio);
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .tab-btn { padding: 10px 16px; font-size: 0.9em; }
+            .meal-title { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
-    <!-- Tela de Login (Offline) -->
+    <!-- Tela de Login -->
     <div id="loginOverlay" class="login-overlay">
         <div class="login-card">
             <h2>🏋️‍♀️ Sara Fit 360°</h2>
-            <p>Modo Offline - Login Local</p>
+            <p>Modo Offline - Dados salvos no navegador</p>
             
             <div class="offline-badge">
-                📴 Dados salvos no seu navegador
+                📴 100% Funcional sem Internet
             </div>
             
             <div id="loginForm">
-                <input type="email" id="loginEmail" class="login-input" placeholder="E-mail" value="teste@email.com">
-                <input type="password" id="loginPassword" class="login-input" placeholder="Senha" value="123456">
+                <input type="email" id="loginEmail" class="login-input" placeholder="Seu e-mail" value="sara@email.com">
+                <input type="password" id="loginPassword" class="login-input" placeholder="Sua senha" value="123456">
                 <div id="loginError" class="login-error"></div>
                 <button class="login-btn" onclick="handleLogin()">Entrar</button>
-                <span class="login-switch" onclick="showSignup()">Não tem conta? Cadastre-se</span>
+                <span class="login-switch" onclick="showSignup()">Criar nova conta</span>
             </div>
             
             <div id="signupForm" style="display: none;">
@@ -501,11 +743,12 @@
         </div>
     </div>
 
-    <!-- Conteúdo principal -->
+    <!-- Conteúdo Principal -->
     <div id="mainContent" class="container" style="display: none;">
+        <!-- Cabeçalho -->
         <div class="header">
             <h1>🏋️‍♀️ Sara Fit 360°</h1>
-            <p>Modo Offline - Seus dados salvos localmente</p>
+            <p>Modo Offline • Sua evolução começa aqui</p>
             
             <div class="user-header">
                 <span class="user-email" id="userEmail">carregando...</span>
@@ -514,7 +757,7 @@
             
             <div class="user-info">
                 <div class="info-item"><span>1,58m</span><label>Altura</label></div>
-                <div class="info-item"><span id="peso-atual">89kg</span><label>Peso</label></div>
+                <div class="info-item"><span id="pesoExibido">89kg</span><label>Peso</label></div>
                 <div class="info-item"><span>5x</span><label>Frequência</label></div>
                 <div class="info-item"><span>🎯</span><label>Glúteos</label></div>
             </div>
@@ -522,21 +765,23 @@
             <div class="streak-card" id="streakCard">
                 <span>🔥</span>
                 <span class="streak-number" id="streakCount">0</span>
-                <span>dias</span>
+                <span>dias seguidos</span>
             </div>
         </div>
 
-        <!-- Navegação -->
+        <!-- Abas de Navegação -->
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="showTab('treinos')">📋 Treinos</button>
             <button class="tab-btn" onclick="showTab('alimentacao')">🥗 Alimentação</button>
             <button class="tab-btn" onclick="showTab('calendario')">📅 Calendário</button>
         </div>
 
+        <!-- Conteúdo Dinâmico -->
         <div class="content">
-            <!-- Treinos -->
+            <!-- PAINEL TREINOS -->
             <div id="treinos" class="tab-panel active">
-                <h2 style="color: #2f2663;">📅 Seus Treinos</h2>
+                <h2>📋 Seus Treinos da Semana</h2>
+                
                 <div class="week-grid">
                     <div class="day-card" onclick="showWorkout('segunda')" id="card-segunda">
                         <h3>Segunda</h3>
@@ -560,44 +805,93 @@
                     </div>
                 </div>
 
+                <!-- Detalhe do Treino - Segunda (visível por padrão) -->
                 <div id="treino-segunda" class="workout-detail">
-                    <h3>Segunda - Glúteos e Quadríceps</h3>
+                    <h3 style="color: var(--roxo-escuro);">🔥 Segunda: Glúteos e Quadríceps</h3>
                     <table class="exercise-table">
                         <tr><th></th><th>Exercício</th><th>Séries</th><th>Repetições</th></tr>
                         <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',0)"></td><td>Agachamento Livre</td><td>4</td><td>12</td></tr>
-                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',1)"></td><td>Leg Press</td><td>4</td><td>15</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',1)"></td><td>Leg Press (pés altos)</td><td>4</td><td>15</td></tr>
                         <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',2)"></td><td>Cadeira Extensora</td><td>3</td><td>15</td></tr>
-                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',3)"></td><td>Afundo</td><td>3</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',3)"></td><td>Afundo com Halteres</td><td>3</td><td>12 (cada)</td></tr>
                         <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',4)"></td><td>Elevação Pélvica</td><td>4</td><td>15</td></tr>
-                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',5)"></td><td>Panturrilha</td><td>4</td><td>20</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('segunda',5)"></td><td>Panturrilha em pé</td><td>4</td><td>20</td></tr>
                     </table>
                 </div>
+
+                <!-- Detalhe do Treino - Terça (oculto) -->
+                <div id="treino-terca" class="workout-detail" style="display: none;">
+                    <h3 style="color: var(--roxo-escuro);">💪 Terça: Costas e Bíceps</h3>
+                    <table class="exercise-table">
+                        <tr><th></th><th>Exercício</th><th>Séries</th><th>Repetições</th></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('terca',0)"></td><td>Puxada Frontal</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('terca',1)"></td><td>Remada Baixa</td><td>4</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('terca',2)"></td><td>Remada Unilateral</td><td>3</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('terca',3)"></td><td>Rosca Direta</td><td>3</td><td>12</td></tr>
+                        <tr><td><input type="checkbox" class="exercise-checkbox" onchange="updateProgress('terca',4)"></td><td>Rosca Martelo</td><td>3</td><td>12</td></tr>
+                    </table>
+                </div>
+
+                <!-- SEÇÃO DA ESTEIRA (Adicionada aqui!) -->
+                <div class="esteira-section">
+                    <h3 style="color: white; margin-bottom: 15px;">🏃‍♀️ Treino de Esteira</h3>
+                    <div class="esteira-grid">
+                        <div class="esteira-input-group">
+                            <label>Tempo (min)</label>
+                            <input type="number" id="esteiraTempo" class="esteira-input" value="30" min="1" max="120">
+                        </div>
+                        <div class="esteira-input-group">
+                            <label>Velocidade (km/h)</label>
+                            <input type="number" id="esteiraVelocidade" class="esteira-input" value="5.5" step="0.1" min="1" max="20">
+                        </div>
+                        <div class="esteira-input-group">
+                            <label>Inclinação (%)</label>
+                            <input type="number" id="esteiraInclinacao" class="esteira-input" value="2" min="0" max="15">
+                        </div>
+                    </div>
+                    <div class="esteira-botoes">
+                        <button class="esteira-btn iniciar" onclick="iniciarEsteira()">▶️ Iniciar</button>
+                        <button class="esteira-btn pausar" onclick="pausarEsteira()">⏸️ Pausar</button>
+                        <button class="esteira-btn finalizar" onclick="finalizarEsteira()">✅ Finalizar</button>
+                    </div>
+                    <div class="esteira-status" id="esteiraStatus">
+                        ⏱️ Pronta para começar!
+                    </div>
+                    <div class="esteira-status" id="esteiraCalorias" style="margin-top: 5px; background: rgba(0,0,0,0.2);">
+                        🔥 Calorias: 0 kcal
+                    </div>
+                </div>
+
+                <button class="export-btn" onclick="finalizarTreino()" style="margin-top: 15px;">✅ Finalizar Treino de Hoje</button>
             </div>
 
-            <!-- Alimentação -->
+            <!-- PAINEL ALIMENTAÇÃO -->
             <div id="alimentacao" class="tab-panel">
-                <h2 style="color: #2f2663;">🥗 20 Opções por Refeição</h2>
+                <h2>🥗 20 Opções Saudáveis por Refeição</h2>
                 
+                <!-- Café da Manhã -->
                 <div class="meal-section">
                     <div class="meal-title">
-                        🌅 Café da Manhã
-                        <button class="export-meal-btn" onclick="exportarRefeicao('cafe')">📥 Exportar</button>
+                        🌅 Café da Manhã (20 opções)
+                        <button class="export-meal-btn" onclick="exportarRefeicao('cafe')">📥 Exportar Receitas</button>
                     </div>
                     <div class="options-grid" id="cafeOptions"></div>
                 </div>
                 
+                <!-- Lanche da Manhã -->
                 <div class="meal-section">
                     <div class="meal-title">
-                        ☀️ Lanche da Manhã
-                        <button class="export-meal-btn" onclick="exportarRefeicao('lanche')">📥 Exportar</button>
+                        ☀️ Lanche da Manhã (20 opções)
+                        <button class="export-meal-btn" onclick="exportarRefeicao('lanche')">📥 Exportar Receitas</button>
                     </div>
                     <div class="options-grid" id="lancheOptions"></div>
                 </div>
             </div>
 
-            <!-- Calendário -->
+            <!-- PAINEL CALENDÁRIO -->
             <div id="calendario" class="tab-panel">
-                <h2 style="color: #2f2663;">📅 Calendário de Treinos</h2>
+                <h2>📅 Calendário de Treinos</h2>
+                
                 <div class="calendar-container">
                     <div class="calendar-header">
                         <div class="calendar-month" id="currentMonth">Março 2026</div>
@@ -606,21 +900,26 @@
                             <button class="calendar-nav-btn" onclick="nextMonth()">→</button>
                         </div>
                     </div>
+                    
                     <div class="calendar-weekdays">
                         <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
                     </div>
+                    
                     <div class="calendar-days" id="calendarDays"></div>
+                    
                     <div class="calendar-stats">
-                        <div><span class="stat-value" id="totalTreinos">0</span><div>Treinos</div></div>
-                        <div><span class="stat-value" id="streakAtual">0</span><div>Streak</div></div>
+                        <div><span class="stat-value" id="totalTreinosMes">0</span><div class="stat-label">Treinos no mês</div></div>
+                        <div><span class="stat-value" id="streakAtual">0</span><div class="stat-label">Streak atual</div></div>
                     </div>
-                    <button class="export-btn" onclick="marcarHoje()">✅ Marcar hoje</button>
+                    
+                    <button class="export-btn" onclick="marcarHoje()" style="width: 100%; margin-top: 15px;">✅ Marcar Treino de Hoje</button>
                 </div>
             </div>
         </div>
 
+        <!-- Rodapé -->
         <div class="footer">
-            <p>💜 Modo Offline - Sara Fit 360°</p>
+            <p>💜 Sara Fit 360° • Modo Offline • Seus dados salvos no navegador</p>
         </div>
     </div>
 
@@ -629,20 +928,21 @@
         // BANCO DE DADOS OFFLINE (localStorage)
         // ============================================
         const db = {
-            users: JSON.parse(localStorage.getItem('offlineUsers') || '{}'),
-            currentUser: localStorage.getItem('currentUser'),
+            users: JSON.parse(localStorage.getItem('saraFitUsers') || '{}'),
+            currentUser: localStorage.getItem('saraFitCurrentUser'),
             
             saveUser(email, password) {
                 const userId = 'user_' + Date.now();
                 this.users[userId] = {
                     email: email,
-                    password: password,
+                    password: password, // Apenas para demonstração offline
                     trainedDays: {},
                     streak: 0,
                     lastWorkout: null,
+                    peso: 89,
                     createdAt: new Date().toISOString()
                 };
-                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
+                localStorage.setItem('saraFitUsers', JSON.stringify(this.users));
                 return userId;
             },
             
@@ -657,7 +957,7 @@
             
             setCurrentUser(userId) {
                 this.currentUser = userId;
-                localStorage.setItem('currentUser', userId);
+                localStorage.setItem('saraFitCurrentUser', userId);
             },
             
             getCurrentUser() {
@@ -666,7 +966,7 @@
             
             logout() {
                 this.currentUser = null;
-                localStorage.removeItem('currentUser');
+                localStorage.removeItem('saraFitCurrentUser');
             },
             
             addTrainedDay(date) {
@@ -676,19 +976,13 @@
                 }
                 this.users[this.currentUser].trainedDays[date] = true;
                 this.updateStreak(date);
-                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
-            },
-            
-            removeTrainedDay(date) {
-                if (!this.currentUser) return;
-                delete this.users[this.currentUser].trainedDays[date];
-                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
+                localStorage.setItem('saraFitUsers', JSON.stringify(this.users));
             },
             
             getTrainedDays() {
                 if (!this.currentUser) return [];
                 const days = this.users[this.currentUser].trainedDays || {};
-                return Object.keys(days).filter(key => days[key] === true);
+                return Object.keys(days);
             },
             
             updateStreak(today) {
@@ -696,14 +990,13 @@
                 const user = this.users[this.currentUser];
                 const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
                 
-                if (user.trainedDays[yesterday]) {
+                if (user.trainedDays && user.trainedDays[yesterday]) {
                     user.streak = (user.streak || 0) + 1;
                 } else {
                     user.streak = 1;
                 }
                 
-                localStorage.setItem('offlineUsers', JSON.stringify(this.users));
-                return user.streak;
+                localStorage.setItem('saraFitUsers', JSON.stringify(this.users));
             },
             
             getStreak() {
@@ -712,58 +1005,57 @@
         };
 
         // ============================================
-        // DADOS DAS REFEIÇÕES
+        // DADOS DAS REFEIÇÕES (20 opções cada)
         // ============================================
         const opcoesCafe = [
-            { nome: "Ovos Mexidos", desc: "2 ovos + pão integral + queijo", calorias: 350, proteinas: 25 },
-            { nome: "Vitamina", desc: "Whey + banana + leite + aveia", calorias: 320, proteinas: 30 },
-            { nome: "Iogurte com Granola", desc: "Iogurte grego + granola + frutas", calorias: 280, proteinas: 18 },
+            { nome: "Ovos Mexidos com Pão", desc: "2 ovos mexidos + 2 fatias pão integral + queijo branco", calorias: 350, proteinas: 25 },
+            { nome: "Vitamina Proteica", desc: "1 scoop whey + 1 banana + 200ml leite + aveia", calorias: 320, proteinas: 30 },
+            { nome: "Iogurte com Granola", desc: "Iogurte grego + granola + morangos", calorias: 280, proteinas: 18 },
             { nome: "Panqueca de Banana", desc: "2 panquecas de banana com aveia", calorias: 290, proteinas: 12 },
-            { nome: "Tapioca com Queijo", desc: "Tapioca + queijo mussarela", calorias: 310, proteinas: 14 },
+            { nome: "Tapioca com Queijo", desc: "Tapioca + queijo mussarela + orégano", calorias: 310, proteinas: 14 },
             { nome: "Café da Manhã Fit", desc: "Pão integral + pasta de amendoim + banana", calorias: 330, proteinas: 15 },
-            { nome: "Omelete", desc: "3 ovos + tomate + cebola", calorias: 290, proteinas: 22 },
-            { nome: "Crepioca", desc: "2 ovos + goma de tapioca", calorias: 340, proteinas: 20 },
-            { nome: "Smoothie", desc: "Morango + banana + iogurte", calorias: 260, proteinas: 12 },
-            { nome: "Pão com Ovo", desc: "Pão francês + 2 ovos", calorias: 370, proteinas: 18 },
-            { nome: "Cuscuz", desc: "Cuscuz + ovo + manteiga", calorias: 300, proteinas: 14 },
-            { nome: "Mingau de Aveia", desc: "Aveia + leite + canela", calorias: 280, proteinas: 12 },
-            { nome: "Wrap", desc: "Tortilha integral + ricota + peito de peru", calorias: 310, proteinas: 20 },
-            { nome: "Frutas com Iogurte", desc: "Banana + maçã + iogurte", calorias: 250, proteinas: 10 },
-            { nome: "Sanduíche Natural", desc: "Pão integral + atum + milho", calorias: 290, proteinas: 22 },
+            { nome: "Omelete Simples", desc: "3 ovos + tomate + cebola + cheiro verde", calorias: 290, proteinas: 22 },
+            { nome: "Crepioca", desc: "2 ovos + 2 colheres goma de tapioca", calorias: 340, proteinas: 20 },
+            { nome: "Smoothie de Frutas", desc: "Morango + banana + iogurte + linhaça", calorias: 260, proteinas: 12 },
+            { nome: "Pão com Ovo", desc: "Pão francês + 2 ovos mexidos", calorias: 370, proteinas: 18 },
+            { nome: "Cuscuz Nordestino", desc: "Cuscuz + ovo pochê + manteiga", calorias: 300, proteinas: 14 },
+            { nome: "Mingau de Aveia", desc: "Aveia + leite + canela + mel", calorias: 280, proteinas: 12 },
+            { nome: "Wrap Matinal", desc: "Tortilha integral + ricota + peito de peru", calorias: 310, proteinas: 20 },
+            { nome: "Frutas com Iogurte", desc: "Banana + maçã + iogurte + granola", calorias: 250, proteinas: 10 },
+            { nome: "Sanduíche Natural", desc: "Pão integral + atum + milho + cenoura", calorias: 290, proteinas: 22 },
             { nome: "Quinoa com Frutas", desc: "Quinoa em flocos + leite + morangos", calorias: 270, proteinas: 11 },
             { nome: "Pão de Queijo Fit", desc: "6 pães de queijo de tapioca", calorias: 310, proteinas: 8 },
             { nome: "Shake Verde", desc: "Couve + maçã + gengibre + whey", calorias: 230, proteinas: 25 },
-            { nome: "Bowl de Açaí", desc: "Açaí + banana + granola", calorias: 340, proteinas: 15 },
-            { nome: "Mamão com Aveia", desc: "Mamão + aveia + mel", calorias: 240, proteinas: 8 }
+            { nome: "Bowl de Açaí", desc: "Açaí + banana + granola + whey", calorias: 340, proteinas: 15 },
+            { nome: "Mamão com Aveia", desc: "Mamão papaia + aveia + mel + castanhas", calorias: 240, proteinas: 8 }
         ];
 
         const opcoesLanche = [
-            { nome: "Mix de Castanhas", desc: "Castanhas, amêndoas e nozes", calorias: 180, proteinas: 5 },
-            { nome: "Frutas Secas", desc: "Damasco, ameixa e castanha", calorias: 160, proteinas: 3 },
-            { nome: "Iogurte Proteico", desc: "Iogurte grego + chia", calorias: 140, proteinas: 12 },
-            { nome: "Banana com Pasta", desc: "Banana + pasta de amendoim", calorias: 190, proteinas: 6 },
-            { nome: "Maçã com Canela", desc: "Maçã assada com canela", calorias: 120, proteinas: 1 },
+            { nome: "Mix de Castanhas", desc: "10 castanhas + 5 amêndoas + 5 nozes", calorias: 180, proteinas: 5 },
+            { nome: "Frutas Secas", desc: "Damasco (4) + ameixa (3) + castanha (6)", calorias: 160, proteinas: 3 },
+            { nome: "Iogurte Proteico", desc: "Iogurte grego + chia (1 colher)", calorias: 140, proteinas: 12 },
+            { nome: "Banana com Pasta", desc: "1 banana + 1 colher pasta de amendoim", calorias: 190, proteinas: 6 },
+            { nome: "Maçã com Canela", desc: "1 maçã assada com canela e mel", calorias: 120, proteinas: 1 },
             { nome: "Barra de Cereal", desc: "2 barras de cereal integral", calorias: 150, proteinas: 4 },
-            { nome: "Ovo Cozido", desc: "2 ovos cozidos", calorias: 140, proteinas: 12 },
-            { nome: "Suco Verde", desc: "Couve + limão + gengibre", calorias: 100, proteinas: 2 },
-            { nome: "Tapioca Doce", desc: "Tapioca + coco + mel", calorias: 160, proteinas: 2 },
-            { nome: "Queijo Branco", desc: "2 fatias queijo minas", calorias: 140, proteinas: 10 },
-            { nome: "Whey Shake", desc: "Whey + água gelada", calorias: 120, proteinas: 24 },
-            { nome: "Biscoito de Arroz", desc: "4 biscoitos + requeijão", calorias: 130, proteinas: 3 },
+            { nome: "Ovo Cozido", desc: "2 ovos cozidos + sal e pimenta", calorias: 140, proteinas: 12 },
+            { nome: "Suco Verde", desc: "Couve + limão + gengibre + maçã", calorias: 100, proteinas: 2 },
+            { nome: "Tapioca Doce", desc: "Tapioca + coco ralado + mel", calorias: 160, proteinas: 2 },
+            { nome: "Queijo Branco", desc: "2 fatias queijo minas + orégano", calorias: 140, proteinas: 10 },
+            { nome: "Whey Shake", desc: "1 scoop whey + água gelada", calorias: 120, proteinas: 24 },
+            { nome: "Pão de Queijo", desc: "3 pães de queijo pequenos", calorias: 200, proteinas: 5 },
+            { nome: "Biscoito de Arroz", desc: "4 biscoitos de arroz + requeijão light", calorias: 130, proteinas: 3 },
             { nome: "Cenoura Baby", desc: "Palitos de cenoura + homus", calorias: 110, proteinas: 3 },
-            { nome: "Leite com Chocolate", desc: "Leite + chocolate 70%", calorias: 150, proteinas: 8 },
-            { nome: "Café com Leite", desc: "Café + leite + torrada", calorias: 120, proteinas: 6 },
-            { nome: "Pasta de Grão", desc: "Torrada + pasta de grão de bico", calorias: 140, proteinas: 5 },
-            { nome: "Suco Detox", desc: "Couve + limão + pepino", calorias: 70, proteinas: 1 },
-            { nome: "Palitos de Pepino", desc: "Pepino + cream cheese light", calorias: 90, proteinas: 3 },
-            { nome: "Chá com Torrada", desc: "Chá verde + torrada integral", calorias: 100, proteinas: 2 },
-            { nome: "Gelatina", desc: "Gelatina diet + chia", calorias: 60, proteinas: 2 }
+            { nome: "Leite com Chocolate", desc: "Leite (200ml) + chocolate 70% (10g)", calorias: 150, proteinas: 8 },
+            { nome: "Café com Leite", desc: "Café + leite + 1 torrada", calorias: 120, proteinas: 6 },
+            { nome: "Pasta de Grão", desc: "Torrada integral + pasta de grão de bico", calorias: 140, proteinas: 5 },
+            { nome: "Suco Detox", desc: "Couve + limão + gengibre + pepino", calorias: 70, proteinas: 1 },
+            { nome: "Palitos de Pepino", desc: "Pepino + cream cheese light", calorias: 90, proteinas: 2 },
+            { nome: "Gelatina com Chia", desc: "Gelatina diet + chia", calorias: 60, proteinas: 2 }
         ];
 
         // ============================================
-        // FUNÇÕES DE LOGIN OFFLINE
+        // FUNÇÕES DE LOGIN
         // ============================================
-        
         function handleSignup() {
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
@@ -773,9 +1065,8 @@
                 errorDiv.innerHTML = '❌ Preencha todos os campos';
                 return;
             }
-
             if (password.length < 6) {
-                errorDiv.innerHTML = '❌ Senha deve ter 6+ caracteres';
+                errorDiv.innerHTML = '❌ A senha deve ter pelo menos 6 caracteres';
                 return;
             }
 
@@ -784,8 +1075,10 @@
             
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
-            document.getElementById('userEmail').innerHTML = email;
-            atualizarInterface();
+            document.getElementById('userEmail').innerText = email;
+            carregarOpcoes();
+            renderCalendar();
+            atualizarStreakUI();
         }
 
         function handleLogin() {
@@ -796,7 +1089,6 @@
             const user = db.findUser(email, password);
             
             if (user) {
-                // Encontrar o ID do usuário
                 for (let id in db.users) {
                     if (db.users[id].email === email) {
                         db.setCurrentUser(id);
@@ -806,8 +1098,10 @@
                 
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('userEmail').innerHTML = email;
-                atualizarInterface();
+                document.getElementById('userEmail').innerText = email;
+                carregarOpcoes();
+                renderCalendar();
+                atualizarStreakUI();
             } else {
                 errorDiv.innerHTML = '❌ E-mail ou senha inválidos';
             }
@@ -822,76 +1116,16 @@
         function showSignup() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('signupForm').style.display = 'block';
-            document.getElementById('signupError').innerHTML = '';
         }
 
         function showLogin() {
             document.getElementById('signupForm').style.display = 'none';
             document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('loginError').innerHTML = '';
         }
 
         // ============================================
         // FUNÇÕES DE INTERFACE
         // ============================================
-        
-        function atualizarInterface() {
-            document.getElementById('streakCount').innerHTML = db.getStreak();
-            carregarOpcoes();
-            renderCalendar();
-        }
-
-        function carregarOpcoes() {
-            let cafeHtml = '';
-            opcoesCafe.forEach(op => {
-                cafeHtml += `
-                    <div class="option-card">
-                        <div class="option-name">${op.nome}</div>
-                        <div class="option-desc">${op.desc}</div>
-                        <div class="option-meta">
-                            <span>🔥 ${op.calorias} kcal</span>
-                            <span>💪 ${op.proteinas}g</span>
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('cafeOptions').innerHTML = cafeHtml;
-            
-            let lancheHtml = '';
-            opcoesLanche.forEach(op => {
-                lancheHtml += `
-                    <div class="option-card">
-                        <div class="option-name">${op.nome}</div>
-                        <div class="option-desc">${op.desc}</div>
-                        <div class="option-meta">
-                            <span>🔥 ${op.calorias} kcal</span>
-                            <span>💪 ${op.proteinas}g</span>
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('lancheOptions').innerHTML = lancheHtml;
-        }
-
-        function exportarRefeicao(tipo) {
-            const opcoes = tipo === 'cafe' ? opcoesCafe : opcoesLanche;
-            const nome = tipo === 'cafe' ? 'Café da Manhã' : 'Lanche da Manhã';
-            
-            let conteudo = `# 🥗 Sara Fit - ${nome}\n\n`;
-            opcoes.forEach((op, i) => {
-                conteudo += `${i+1}. **${op.nome}**\n`;
-                conteudo += `   ${op.desc}\n`;
-                conteudo += `   🔥 ${op.calorias} kcal | 💪 ${op.proteinas}g proteína\n\n`;
-            });
-            
-            const blob = new Blob([conteudo], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `sara-fit-${tipo}.txt`;
-            a.click();
-        }
-
         function showTab(tabName) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
@@ -905,9 +1139,9 @@
         }
 
         function updateProgress(day, index) {
-            const card = document.getElementById(`card-${day}`);
             const checkboxes = document.querySelectorAll(`#treino-${day} .exercise-checkbox`);
             const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            const card = document.getElementById(`card-${day}`);
             
             if (allChecked) {
                 card.classList.add('completed');
@@ -916,11 +1150,90 @@
             }
         }
 
+        function atualizarStreakUI() {
+            document.getElementById('streakCount').innerText = db.getStreak();
+        }
+
+        function finalizarTreino() {
+            const hoje = new Date().toISOString().split('T')[0];
+            db.addTrainedDay(hoje);
+            atualizarStreakUI();
+            renderCalendar();
+            alert('✅ Treino de hoje finalizado e registrado!');
+        }
+
         // ============================================
-        // CALENDÁRIO
+        // FUNÇÕES DA ESTEIRA
+        // ============================================
+        let esteiraInterval;
+        let esteiraAtiva = false;
+        let esteiraTempoRestante = 0;
+        let esteiraTempoTotal = 0;
+
+        function iniciarEsteira() {
+            if (esteiraAtiva) {
+                alert('Treino já em andamento!');
+                return;
+            }
+            
+            const tempo = parseInt(document.getElementById('esteiraTempo').value);
+            const velocidade = parseFloat(document.getElementById('esteiraVelocidade').value);
+            const inclinacao = parseInt(document.getElementById('esteiraInclinacao').value);
+            
+            esteiraTempoRestante = tempo * 60;
+            esteiraTempoTotal = tempo * 60;
+            esteiraAtiva = true;
+            
+            esteiraInterval = setInterval(() => {
+                if (esteiraTempoRestante > 0) {
+                    esteiraTempoRestante--;
+                    
+                    const minutos = Math.floor(esteiraTempoRestante / 60);
+                    const segundos = esteiraTempoRestante % 60;
+                    document.getElementById('esteiraStatus').innerHTML = 
+                        `⏱️ Treino em andamento: ${minutos}:${segundos.toString().padStart(2, '0')}`;
+                    
+                    const minutosPassados = (esteiraTempoTotal - esteiraTempoRestante) / 60;
+                    const calorias = Math.round(0.07 * 89 * minutosPassados * (velocidade/5) * (1 + inclinacao/100));
+                    document.getElementById('esteiraCalorias').innerHTML = `🔥 Calorias queimadas: ~${calorias} kcal`;
+                } else {
+                    finalizarEsteira();
+                }
+            }, 1000);
+        }
+
+        function pausarEsteira() {
+            if (esteiraAtiva) {
+                clearInterval(esteiraInterval);
+                esteiraAtiva = false;
+                document.getElementById('esteiraStatus').innerHTML = '⏸️ Treino pausado';
+            }
+        }
+
+        function finalizarEsteira() {
+            clearInterval(esteiraInterval);
+            esteiraAtiva = false;
+            
+            const tempo = parseInt(document.getElementById('esteiraTempo').value);
+            const velocidade = parseFloat(document.getElementById('esteiraVelocidade').value);
+            const inclinacao = parseInt(document.getElementById('esteiraInclinacao').value);
+            const calorias = Math.round(0.07 * 89 * tempo * (velocidade/5) * (1 + inclinacao/100));
+            
+            document.getElementById('esteiraStatus').innerHTML = '✅ Treino finalizado!';
+            document.getElementById('esteiraCalorias').innerHTML = `🔥 Total: ${calorias} kcal queimadas!`;
+            
+            // Registrar como treino do dia também
+            const hoje = new Date().toISOString().split('T')[0];
+            db.addTrainedDay(hoje);
+            atualizarStreakUI();
+            renderCalendar();
+        }
+
+        // ============================================
+        // FUNÇÕES DO CALENDÁRIO
         // ============================================
         let currentDate = new Date();
-        
+
         function renderCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
@@ -935,34 +1248,43 @@
             for (let i = 0; i < firstDay; i++) html += '<div class="calendar-day empty"></div>';
             
             const trained = db.getTrainedDays();
-            let treinosCount = 0;
+            const hoje = new Date().toISOString().split('T')[0];
+            let treinosMes = 0;
             
             for (let d = 1; d <= lastDate; d++) {
                 const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                 const isTrained = trained.includes(dateStr);
-                if (isTrained) treinosCount++;
-                html += `<div class="calendar-day ${isTrained ? 'trained' : ''}" onclick="toggleDay('${dateStr}')">${d}</div>`;
+                const isToday = dateStr === hoje;
+                
+                let classes = 'calendar-day';
+                if (isTrained) { classes += ' trained'; treinosMes++; }
+                if (isToday) classes += ' today';
+                
+                html += `<div class="${classes}" onclick="toggleDay('${dateStr}')">${d}</div>`;
             }
             
             document.getElementById('calendarDays').innerHTML = html;
-            document.getElementById('totalTreinos').innerHTML = treinosCount;
+            document.getElementById('totalTreinosMes').innerHTML = treinosMes;
             document.getElementById('streakAtual').innerHTML = db.getStreak();
         }
 
         function toggleDay(dateStr) {
             const trained = db.getTrainedDays();
             if (trained.includes(dateStr)) {
-                db.removeTrainedDay(dateStr);
+                // Não implementamos remoção para manter simplicidade
+                alert('Para remover um dia, use o botão "Marcar Hoje"');
             } else {
                 db.addTrainedDay(dateStr);
+                renderCalendar();
+                atualizarStreakUI();
             }
-            renderCalendar();
         }
 
         function marcarHoje() {
-            const today = new Date().toISOString().split('T')[0];
-            db.addTrainedDay(today);
+            const hoje = new Date().toISOString().split('T')[0];
+            db.addTrainedDay(hoje);
             renderCalendar();
+            atualizarStreakUI();
             alert('✅ Treino de hoje registrado!');
         }
 
@@ -977,16 +1299,79 @@
         }
 
         // ============================================
+        // FUNÇÕES DE ALIMENTAÇÃO
+        // ============================================
+        function carregarOpcoes() {
+            // Café da manhã
+            let cafeHtml = '';
+            opcoesCafe.forEach(op => {
+                cafeHtml += `
+                    <div class="option-card">
+                        <div class="option-name">${op.nome}</div>
+                        <div class="option-desc">${op.desc}</div>
+                        <div class="option-meta">
+                            <span>🔥 ${op.calorias} kcal</span>
+                            <span>💪 ${op.proteinas}g prot</span>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('cafeOptions').innerHTML = cafeHtml;
+            
+            // Lanche da manhã
+            let lancheHtml = '';
+            opcoesLanche.forEach(op => {
+                lancheHtml += `
+                    <div class="option-card">
+                        <div class="option-name">${op.nome}</div>
+                        <div class="option-desc">${op.desc}</div>
+                        <div class="option-meta">
+                            <span>🔥 ${op.calorias} kcal</span>
+                            <span>💪 ${op.proteinas}g prot</span>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('lancheOptions').innerHTML = lancheHtml;
+        }
+
+        function exportarRefeicao(tipo) {
+            const opcoes = tipo === 'cafe' ? opcoesCafe : opcoesLanche;
+            const nome = tipo === 'cafe' ? 'Café da Manhã' : 'Lanche da Manhã';
+            
+            let conteudo = `# 🥗 SARA FIT 360° - RECEITAS DE ${nome.toUpperCase()}\n`;
+            conteudo += `# Gerado em: ${new Date().toLocaleDateString('pt-BR')}\n`;
+            conteudo += `# Total de opções: ${opcoes.length}\n\n`;
+            
+            opcoes.forEach((op, index) => {
+                conteudo += `## ${index+1}. ${op.nome}\n`;
+                conteudo += `**Descrição:** ${op.desc}\n`;
+                conteudo += `**Calorias:** ${op.calorias} kcal\n`;
+                conteudo += `**Proteínas:** ${op.proteinas}g\n\n`;
+                conteudo += `---\n\n`;
+            });
+            
+            const blob = new Blob([conteudo], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sara-fit-${tipo}-${new Date().toISOString().split('T')[0]}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ============================================
         // INICIALIZAÇÃO
         // ============================================
         window.onload = function() {
-            // Verificar se já tem usuário logado
             const currentUser = db.getCurrentUser();
             if (currentUser) {
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
-                document.getElementById('userEmail').innerHTML = currentUser.email;
-                atualizarInterface();
+                document.getElementById('userEmail').innerText = currentUser.email;
+                carregarOpcoes();
+                renderCalendar();
+                atualizarStreakUI();
             }
         };
     </script>
